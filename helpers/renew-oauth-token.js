@@ -1,19 +1,14 @@
 const axios = require('axios');
 
-const oauthTokenVerification = async (req, res, next) => {
-  const { clientID, clientSecret } = req.body;
-
-  if (!clientID || !clientSecret) {
-    return res.status(400).json({
-      msg: 'Missing data on body request',
-    });
-  }
+const renewOauthToken = async (res) => {
+  const clientID = process.env.CLIENT_ID;
+  const clientSecret = process.env.CLIENT_SECRET;
+  const url = process.env.AUTH_URI + '/login';
 
   const data = {
     'client_id': clientID,
     'client_secret': clientSecret
   };
-  const url = process.env.AUTH_URI + '/login';
 
   try {
     const oauthReasponse = await axios({
@@ -21,10 +16,11 @@ const oauthTokenVerification = async (req, res, next) => {
       url,
       data
     });
-  
+
     const { token, type } = oauthReasponse.data;
 
-    if (token && type === 'Bearer') { 
+    if (token && type === 'Bearer') {
+      // Store token on cookie
       // Store token on a cookie
       res.cookie('oauthCookie',token,{
         maxAge:'9000000',
@@ -32,9 +28,8 @@ const oauthTokenVerification = async (req, res, next) => {
         overwrite: true
       });
 
-      req.body = clientID;
+      return true;
 
-      next();
     } else {
       return res.status(403).json({
         msg: 'access denied, please verify your credentials'
@@ -49,5 +44,5 @@ const oauthTokenVerification = async (req, res, next) => {
 };
 
 module.exports = {
-  oauthTokenVerification
+  renewOauthToken,
 };

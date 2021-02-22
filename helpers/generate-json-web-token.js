@@ -5,7 +5,7 @@ const generateJWT = ( uid ) => {
     const payload = { uid };
   
     jwt.sign(payload, process.env.PRIVATE_KEY, {
-      expiresIn: '5h'
+      expiresIn: '10h'
     }, (err, token) => {
       if (err) {
         reject('Unable to generate JWT', err);
