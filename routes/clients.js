@@ -16,7 +16,7 @@ router.get('/:id', [
   validateJWT
 ], clientsDetail);
 // Clients By Name
-router.get('/:name', [
+router.get('/clientName/:name', [
   validateJWT
 ], clientsByName);
 // Clients Policies

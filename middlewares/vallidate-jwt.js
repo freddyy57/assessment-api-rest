@@ -14,6 +14,7 @@ const validateJWT = (req = request, res = response, next) => {
     const { uid } = jwt.verify(apiKeyId, process.env.PRIVATE_KEY);
 
     if (uid) {
+      req.uid = uid;
       next();
     } else {
       return res.status(401).json({

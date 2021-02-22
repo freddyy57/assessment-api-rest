@@ -16,10 +16,10 @@ const requestApiClient = async (req, res, endPoint) => {
   }
 
   try {
-    let oauthReasponse = await axios.get(urlEndPoint, {headers: headers});
+    const apiClientData = await axios.get(urlEndPoint, {headers: headers});
     
-    if (oauthReasponse.data) {
-      return oauthReasponse;
+    if (apiClientData.data) {
+      return apiClientData;
     } 
 
   } catch (err) {
