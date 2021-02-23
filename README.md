@@ -16,7 +16,7 @@ npm run test
 
 ```
 ## How this Assessment API REST Works?  
- ##LOGIN*  
+ ## LOGIN   
  Method: POST  
 
  *EndPoint Example:*  
